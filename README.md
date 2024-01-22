@@ -1,6 +1,6 @@
-# React-hw-04-phonebook
+# React-hw-06-phonebook
 
-Refactoring code using hooks
+Connecting and using state manager Redux in application.
 
 ## Contacts book
 
