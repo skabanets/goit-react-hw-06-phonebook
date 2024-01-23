@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormButton, Input, InputLabel } from './ContactForm.styled';
+import { useForm } from 'react-hook-form';
+import { selectContacts } from '../../redux/phonebook/selectors';
+import { findContact } from 'helpers/findContact';
+import { nanoid } from 'nanoid';
+import { addContact } from '../../redux/phonebook/actions';
 
-export const ContactForm = ({ addContact }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+export const ContactForm = () => {
+  const { register, handleSubmit, reset } = useForm();
+  const contacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
 
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    addContact(name, number);
-    setName('');
-    setNumber('');
-  };
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    name === 'name' ? setName(value) : setNumber(value);
+  const submit = data => {
+    if (findContact(data.name, contacts)) return;
+    dispatch(addContact({ ...data, id: nanoid() }));
+    reset();
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit(submit)}>
       <InputLabel>
         Name
         <Input
+          {...register('name')}
           type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
           required
           placeholder="Enter contact name"
           minLength={3}
@@ -35,10 +32,8 @@ export const ContactForm = ({ addContact }) => {
       <InputLabel>
         Number
         <Input
+          {...register('number')}
           type="tel"
-          name="number"
-          value={number}
-          onChange={handleChange}
           required
           minLength={9}
           maxLength={13}
