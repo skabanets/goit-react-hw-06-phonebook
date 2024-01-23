@@ -3,10 +3,11 @@ import { Contacts } from 'components/Contacts/Contacts';
 import { PhonebookWrapper, Subtitle, Title } from './Phonebook.styled';
 import { Filter } from 'components/Filter/Filter';
 import { useSelector } from 'react-redux';
-import { selectContacts } from '../../redux/phonebook/selectors';
+import { selectContacts } from '../../redux/contacts/slice';
 
 export const Phonebook = () => {
   const contacts = useSelector(selectContacts);
+  console.log(contacts);
 
   return (
     <PhonebookWrapper>

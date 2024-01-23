@@ -5,12 +5,15 @@ import {
   FilterWrpper,
   ResetBtn,
 } from './Filter.styled';
-import { changeFilter, resetFilter } from '../../redux/phonebook/actions';
-import { selectFilter } from '../../redux/phonebook/selectors';
+import {
+  changeFilter,
+  resetFilter,
+  selectFilters,
+} from '../../redux/filter/slice';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(selectFilter);
+  const filter = useSelector(selectFilters);
 
   return (
     <FilterWrpper>

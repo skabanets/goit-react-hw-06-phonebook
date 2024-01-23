@@ -6,12 +6,12 @@ import {
   DeleteContactBtn,
   FilterErrorMessage,
 } from './Contacts.styled';
-import { deleteContact } from '../../redux/phonebook/actions';
-import { selectContacts, selectFilter } from '../../redux/phonebook/selectors';
+import { selectFilters } from '../../redux/filter/slice';
+import { deleteContact, selectContacts } from '../../redux/contacts/slice';
 
 export const Contacts = () => {
   const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectFilter);
+  const filter = useSelector(selectFilters);
 
   const dispatch = useDispatch();
 

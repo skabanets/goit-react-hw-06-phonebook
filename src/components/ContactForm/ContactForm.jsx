@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormButton, Input, InputLabel } from './ContactForm.styled';
 import { useForm } from 'react-hook-form';
-import { selectContacts } from '../../redux/phonebook/selectors';
 import { findContact } from 'helpers/findContact';
-import { nanoid } from 'nanoid';
-import { addContact } from '../../redux/phonebook/actions';
+import { addContact, selectContacts } from '../../redux/contacts/slice';
 
 export const ContactForm = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -13,7 +11,7 @@ export const ContactForm = () => {
 
   const submit = data => {
     if (findContact(data.name, contacts)) return;
-    dispatch(addContact({ ...data, id: nanoid() }));
+    dispatch(addContact({ ...data }));
     reset();
   };
 
