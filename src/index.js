@@ -5,11 +5,14 @@ import './index.css';
 import 'modern-normalize/modern-normalize.css';
 import { GlobalStyle } from 'styles/CreateGlobalStyle';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <GlobalStyle />
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <GlobalStyle />
+      <App />
+    </PersistGate>
   </Provider>
 );

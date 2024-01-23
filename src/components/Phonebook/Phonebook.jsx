@@ -7,7 +7,6 @@ import { selectContacts } from '../../redux/contacts/slice';
 
 export const Phonebook = () => {
   const contacts = useSelector(selectContacts);
-  console.log(contacts);
 
   return (
     <PhonebookWrapper>
