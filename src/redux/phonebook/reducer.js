@@ -1,43 +1,29 @@
+import { createReducer } from '@reduxjs/toolkit';
 import {
-  ADD_CONTACT,
-  CHANGE_FILTER,
-  DELETE_CONTACT,
-  RESET_FILTER,
-} from './actionsTypes';
+  addContact,
+  deleteContact,
+  changeFilter,
+  resetFilter,
+} from './actions';
 
 const initialState = {
   contacts: [],
   filter: '',
 };
 
-export const phonebookReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_CONTACT:
-      return {
-        ...state,
-        contacts: [...state.contacts, { ...action.payload }],
-      };
-    case DELETE_CONTACT: {
-      return {
-        ...state,
-        contacts: [
-          ...state.contacts.filter(contact => contact.id !== action.payload),
-        ],
-      };
-    }
-    case CHANGE_FILTER: {
-      return {
-        ...state,
-        filter: action.payload,
-      };
-    }
-    case RESET_FILTER: {
-      return {
-        ...state,
-        filter: '',
-      };
-    }
-    default:
-      return state;
-  }
-};
+export const phonebookReducer = createReducer(initialState, builder => {
+  builder
+    .addCase(addContact, (state, { payload }) => {
+      state.contacts.push(payload);
+    })
+    .addCase(deleteContact, (state, { payload }) => {
+      const index = state.contacts.findIndex(item => item.id === payload);
+      state.contacts.splice(index, 1);
+    })
+    .addCase(changeFilter, (state, { payload }) => {
+      state.filter = payload;
+    })
+    .addCase(resetFilter, state => {
+      state.filter = '';
+    });
+});
